@@ -8,7 +8,7 @@ enum class Figure(val combination: IntArray, val score: Int) {
 
 }
 
-fun findFigure(dices: IntArray): Figure? {
+fun findCorrespondingFigure(dices: IntArray): Figure? {
     return Figure.values().find { it.combination contentEquals dices }
 }
 
@@ -17,7 +17,7 @@ class Line(private val diceResults: IntArray) {
 
     fun score(): Int {
         val figureCombination = getDiceRollsFigure()
-        val figure = findFigure(figureCombination)
+        val figure = findCorrespondingFigure(figureCombination)
         return figure?.score ?: nonFigureScore()
     }
 
@@ -25,7 +25,6 @@ class Line(private val diceResults: IntArray) {
         val scoresByValue = diceResults.groupBy { it }.mapValues { it.value.size }
         return scoresByValue.values.sortedDescending().toIntArray()
     }
-
 
     private fun nonFigureScore(): Int {
         return if (isStraight())
@@ -40,5 +39,4 @@ class Line(private val diceResults: IntArray) {
     }
 
     private fun isStraight() = (diceResults.max()!! - diceResults.min()!! == 4)
-
 }
